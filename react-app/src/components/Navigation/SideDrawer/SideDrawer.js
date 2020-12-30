@@ -2,20 +2,32 @@ import React from 'react';
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import './SideDrawer.css';
+import Backdrop from '../../UI/Backdrop/Backdrop';
+import Aux from "../../../hoc/Aux";
+
 
 const sideDrawer = (props) => {
     //...
     return (
-        <div className="SideDrawer">
-            <div className= "LogoSideDrawer">
-                <Logo/>
-            </div>
+        <Aux>
+            <Backdrop show={props.open} clicked={props.closed}/>
+        
+            <div className="SideDrawer"
+                style={{
+                    transform: props.open ? "translateX(0)" : "translateX(-100%)"
+                }}>
+                <div className= "LogoSideDrawer">
+                    <Logo/>
+                </div>
+
+
                 {/* <Logo height="11%"/> */}
-            
-            <nav>
-                <NavigationItems />
-            </nav>
-        </div>
+                
+                <nav>
+                    <NavigationItems />
+                </nav>
+            </div>
+        </Aux>
     );
 };
 
