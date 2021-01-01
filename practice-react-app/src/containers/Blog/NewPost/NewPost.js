@@ -9,6 +9,11 @@ class NewPost extends Component {
         content: '',
         author: 'Max'
     }
+
+    componentDidMount () {
+        console.log(this.props);
+    }
+
     postDataHandler = () => {
         const data = {
             title: this.state.title,
@@ -20,7 +25,6 @@ class NewPost extends Component {
                 console.log(response);
             });
     }
-
 
     render () {
         return (
