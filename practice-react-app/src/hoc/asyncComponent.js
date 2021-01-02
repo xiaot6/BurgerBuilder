@@ -1,7 +1,7 @@
-import React, { Compoenent } from 'react';
+import React, { Component } from 'react';
 
 const asyncComponent = (importCompoennet) => {
-    return class extends Compoenent{
+    return class extends Component{
         state = {
             component: null
         }
