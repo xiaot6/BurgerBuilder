@@ -25,3 +25,14 @@
     outline: none;
     background-color: #ccc;
 }
+
+.InputElementInvalid {
+    outline: none;
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid red;
+    background-color: #FDA49A;
+}
