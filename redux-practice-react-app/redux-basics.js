@@ -1,5 +1,6 @@
-// import { } from 
-    
+//run this file use:node redux-basics.js
+ 
+ 
 const redux = require('redux');
 const createStore = redux.createStore;
 
@@ -37,3 +38,6 @@ console.log(store.getState());
 
 
 //Subscription
+store.subscribe(() => {
+    console.log('[Subscription', store.getState());
+});
