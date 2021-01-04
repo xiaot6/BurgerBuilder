@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Button from "../../../components/UI/Button/Button";
-import "./ContactData.css"
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Input from "../../../components/UI/Input/Input";
-
+import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import classes from './ContactData.css';
 import axios from '../../../axios-orders';
-
+import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
     state = {
@@ -23,7 +21,7 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             street: {
                 elementType: 'input',
@@ -36,7 +34,7 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             zipCode: {
                 elementType: 'input',
@@ -48,10 +46,11 @@ class ContactData extends Component {
                 validation: {
                     required: true,
                     minLength: 5,
-                    maxLength: 5
+                    maxLength: 5,
+                    isNumeric: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             country: {
                 elementType: 'input',
@@ -64,7 +63,7 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -74,10 +73,11 @@ class ContactData extends Component {
                 },
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    isEmail: true
                 },
                 valid: false,
-                touched:false
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -87,13 +87,13 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value: 'fastest',
-                validation: { },
+                value: '',
+                validation: {},
                 valid: true
             }
         },
-        loading: false,
-        formIsValid: false
+        formIsValid: false,
+        loading: false
     }
 
     orderHandler = ( event ) => {
@@ -120,29 +120,39 @@ class ContactData extends Component {
 
     checkValidity(value, rules) {
         let isValid = true;
-
+        if (!rules) {
+            return true;
+        }
+        
         if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
 
         if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
+            isValid = value.length >= rules.minLength && isValid
         }
 
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid
+        }
+
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
+        }
 
         return isValid;
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
-        //inputIdentifier is like the "street".
-        //deep code both the outside part 
         const updatedOrderForm = {
             ...this.state.orderForm
         };
-        //deep code and the inner part 
         const updatedFormElement = { 
             ...updatedOrderForm[inputIdentifier]
         };
@@ -150,17 +160,15 @@ class ContactData extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
+        
         let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
-        this.setState({
-            orderForm: updatedOrderForm,
-            formIsValid: formIsValid
-        });
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
 
-    render() {
+    render () {
         const formElementsArray = [];
         for (let key in this.state.orderForm) {
             formElementsArray.push({
@@ -181,18 +189,14 @@ class ContactData extends Component {
                         touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button
-                    btnType="Success"
-                    disabled={!this.state.formIsValid}>
-                    ORDER
-                </Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
         if ( this.state.loading ) {
             form = <Spinner />;
         }
         return (
-            <div className="ContactData">
+            <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
                 {form}
             </div>
@@ -204,8 +208,7 @@ const mapStateToProps = state => {
     return {
         ings: state.ingredients,
         price: state.totalPrice
-    };
-}
+    }
+};
 
-
-export default connect (mapStateToProps)(ContactData);
+export default connect(mapStateToProps)(ContactData);
