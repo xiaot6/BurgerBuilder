@@ -28,7 +28,6 @@ export const fetchIngredientsFailed = () => {
     };
 };
 
-
 export const initIngredients = () => {
     return dispatch => {
         axios.get( 'https://react-burger-xiao-default-rtdb.firebaseio.com/ingredients.json' )
