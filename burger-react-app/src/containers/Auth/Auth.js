@@ -8,6 +8,8 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import "./Auth.css";
 import * as actions from "../../store/actions/index";
 import { updateObject, checkValidity } from '../../shared/utility';
+// import { signInWithGoogle } from '../firebase'
+
 
 class Auth extends Component{
     state = {
@@ -130,8 +132,11 @@ class Auth extends Component{
                 <Button
                     btnType="Danger"
                     clicked={this.switchAuthModeHandler}>
-                    SWITCH TO {this.state.isSignup ? "SIGN IN" : "SIGN UP"}
+                    {this.state.isSignup ? "Already have an account? SIGN IN HERE" : "Don't have an account? SIGN UP HERE"}
                 </Button>
+                {/* <Button btnType="Danger" >
+                    Sign In with Google
+                </Button> */}
             </div>
         );
 
