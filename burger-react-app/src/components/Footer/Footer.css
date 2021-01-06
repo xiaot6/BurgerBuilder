@@ -1,0 +1,37 @@
+.Footer {
+    width: 100%;
+    background-color: #c15711;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    box-shadow: 0 2px 1px #ccc;
+    margin: auto;
+    padding: 10px 0;
+}
+
+.Footer h3 {
+    color: burlywood;
+}
+
+.Footer li {
+    color: burlywood;
+}
+
+.Footer a:link {
+    color:  burlywood;
+}
+
+/* visited link */
+.Footer a:visited {
+    color: white;
+  }
+  
+  /* mouse over link */
+.Footer  a:hover {
+    color: burlywood;
+  }
+  
+  /* selected link */
+.Footer  a:active {
+    color: burlywood;
+  }
