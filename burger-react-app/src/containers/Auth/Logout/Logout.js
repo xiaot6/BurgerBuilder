@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import * as actions from "../../../store/actions/index";
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+
+import * as actions from '../../../store/actions/index';
 
 class Logout extends Component {
-    componentDidMount() {
+    componentDidMount () {
         this.props.onLogout();
     }
 
-
-    render() {
-        return <Redirect to = "/"/>;
+    render () {
+        return <Redirect to="/"/>;
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogout: () => dispatch (actions.logout())
+        onLogout: () => dispatch(actions.logout())
     };
 };
 
