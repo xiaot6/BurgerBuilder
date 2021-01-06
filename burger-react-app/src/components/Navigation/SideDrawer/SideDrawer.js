@@ -13,6 +13,7 @@ const sideDrawer = (props) => {
             <Backdrop show={props.open} clicked={props.closed}/>
         
             <div className="SideDrawer"
+                onClick={props.closed}
                 style={{
                     transform: props.open ? "translateX(0)" : "translateX(-100%)"
                 }}>
